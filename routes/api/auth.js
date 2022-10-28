@@ -19,7 +19,7 @@ router.get("/current", authenticate, ctrlWrapper(ctrl.getCurrent));
 router.get("/logout", authenticate, ctrlWrapper(ctrl.logout));
 
 router.patch(
-  "/subscription/:subscription",
+  "/subscription",
   authenticate,
   validation(schemas.updateSubscriptionSchema),
   ctrlWrapper(ctrl.updateSubscription)

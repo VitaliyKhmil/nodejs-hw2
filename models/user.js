@@ -35,7 +35,7 @@ userSchema.post("save", handleSaveErrors);
 const registerSchema = Joi.object({
   password: Joi.string().min(6).required(),
   email: Joi.string().pattern(emailRegexp).required(),
-  subscription: Joi.string(),
+  subscription: Joi.string().valid("starter", "pro", "business"),
 });
 
 const loginSchema = Joi.object({
