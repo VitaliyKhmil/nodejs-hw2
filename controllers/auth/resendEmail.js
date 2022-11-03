@@ -7,9 +7,10 @@ const { BASE_URL } = process.env;
 const resendEmail = async (req, res) => {
     const { email } = req.body;
     const user = await User.findOne({ email });
-    if (!user || user.verify) {
-        throw RequestError(404)
-    }
+     if (!user) throw RequestError(404, `User not found`);
+  if (user.verify) {
+    throw RequestError(400, "Verification has already been passed");
+  }
     
     const mail = {
         to: email,
