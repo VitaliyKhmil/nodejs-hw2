@@ -1,11 +1,12 @@
 const express = require("express");
 
-const { validation, ctrlWrapper, authenticate, upload} = require("../../middlewares");
+const { validation, ctrlWrapper, validateBody, authenticate, upload} = require("../../middlewares");
 const { schemas } = require("../../models/user");
 const ctrl = require("../../controllers/auth");
 
 const router = express.Router();
 
+// signup
 router.post(
   "/register",
   validation(schemas.registerSchema),
@@ -13,6 +14,13 @@ router.post(
   ctrlWrapper(ctrl.register)
 );
 
+router.get("/verify/:verificationToken", ctrlWrapper(ctrl.verify))
+
+router.post("/verify", validateBody(schemas.verifyEmailSchema), ctrlWrapper(ctrl.resendEmail))
+
+
+
+// signin
 router.post("/login", validation(schemas.loginSchema), ctrlWrapper(ctrl.login));
 
 router.get("/current", authenticate, ctrlWrapper(ctrl.getCurrent));
